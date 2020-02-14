@@ -100,4 +100,17 @@ router.put('/:id', validateID, (req, res) =>
         res.status(500).json({error: 'error updating project'});
     })
 })
+
+router.delete('/:id', validateID, (req, res) =>
+{
+    projectDatabase.remove(req.project.id)
+    .then(deleted =>
+    {
+        res.status(200).json({message: `project with name of ${req.project.name} has been deleted from the database`});
+    })
+    .catch(err =>
+    {
+        res.status(500).json({error: 'There was an error deleting the project from the database'});
+    })
+})
 module.exports = router;
