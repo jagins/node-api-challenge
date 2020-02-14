@@ -40,13 +40,31 @@ Demonstrate your understanding of this Sprint's concepts by answering the follow
 
 - [ ] Mention two parts of Express that you learned about this week.
 
+This week I learned about Express has a built in middleware to use json in your applicaiton, and I also
+learned the value of writing custom middleware and be able to use it in multiple parts of the application.
+
 - [ ] Describe Middleware?
+
+Middlware are functions that are executed in the order they are defined. There's also different types of middleware
+like custom, built in, or ones that can be brought into with npm packages. However, most things even route handlers are
+considered to be middleware in Express.
 
 - [ ] Describe a Resource?
 
+A resource can be anything, it can be a different uris' or a piece of data you're returning a piece of data back to the client
+for example, and resources can be managed by using different http methods such as GET, or POST.
+
+
 - [ ] What can the API return to help clients know if a request was successful?
 
+API's can return the status code of the request. If it was successful it will return a 200 status, and if
+the request failed it could return a 400, 500, or 404 error depending on the operation it was asked to perfom.
+
 - [ ] How can we partition our application into sub-applications?
+
+We can partition our application into sub-apps by using the express router. For example let's say we have
+an api and an admin router. The api would only handle requests that matched the admin routes and same with the admin
+router. This makes our application modular, easier to maintain and keeps our code clean.
 
 ## Minimum Viable Product
 
