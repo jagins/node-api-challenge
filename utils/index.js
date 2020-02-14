@@ -21,4 +21,25 @@ function validateID(req, res, next)
     })
 }
 
-module.exports = {validateID};
+function validateProject(req, res, next)
+{
+  if(!req.body.name && !req.body.description)
+  {
+      res.status(400).json({error: 'missing project information'});
+  }
+   
+  if(!req.body.name)
+  {
+    res.status(400).json({error: 'missing required name field'});
+  }
+  if(!req.body.description)
+  {
+    res.status(400).json({error: 'missing required description field'});
+  }
+  else
+  {
+    next();
+  }
+}
+
+module.exports = {validateID, validateProject};

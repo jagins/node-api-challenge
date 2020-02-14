@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const projectDatabase = require('../data/helpers/projectModel');
-const {validateID} = require('../utils');
+const {validateID, validateProject} = require('../utils');
 
 // api/projects
 router.get('/', (req, res) =>
@@ -42,4 +42,22 @@ router.get('/:id/actions', validateID, (req, res) =>
     })
 })
 
+router.post('/', validateProject, (req, res) =>
+{
+    const newProject = {
+        name: req.body.name,
+        description: req.body.description,
+        completed: false
+    }
+
+    projectDatabase.insert(newProject)
+    .then(addedProject =>
+    {
+        res.status(201).json(addedProject);
+    })
+    .catch(err =>
+    {
+        res.status(500).json({error: 'There was an error saving to the database'});
+    })
+})
 module.exports = router;
