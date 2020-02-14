@@ -42,4 +42,17 @@ router.put('/:id', validateActionId, (req, res) =>
     })
 })
 
+router.delete('/:id', validateActionId, (req, res) =>
+{
+    actionsDatabase.remove(req.action.id)
+    .then(deleted =>
+    {
+        res.status(200).json({message: `action with the description of ${req.action.description} has been deleted`});
+    })
+    .catch(err =>
+    {
+        res.status(500).json({error: 'There was an error deleting the action from the database'});
+    })
+})
+
 module.exports = router;
