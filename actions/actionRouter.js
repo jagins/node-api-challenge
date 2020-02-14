@@ -1,6 +1,6 @@
 const express = require('express');
 const actionsDatabase = require('../data/helpers/actionModel');
-const {validateActions} = require('../utils');
+const {validateActions, validateActionId} = require('../utils');
 const router = express.Router();
 
 // /api/projects/actions
@@ -15,6 +15,11 @@ router.get('/', (req, res) =>
     {
         res.status(500).json({error: 'Projects could not be retrieved from the database'});
     })
+})
+
+router.get('/:id', validateActionId, (req, res) =>
+{
+    res.status(200).json(req.action);
 })
 
 module.exports = router;

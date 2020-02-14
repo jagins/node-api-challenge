@@ -1,4 +1,5 @@
 const projectDatabase = require('../data/helpers/projectModel');
+const actionsDatabase = require('../data/helpers/actionModel');
 
 function validateID(req, res, next)
 {
@@ -65,4 +66,21 @@ function validateActions(req, res, next)
     }
 }
 
-module.exports = {validateID, validateProject, validateActions};
+function validateActionId(req, res, next)
+{
+    actionsDatabase.get(req.params.id)
+    .then(action =>
+    {
+        if(action)
+        {
+            req.action = action;
+            next();
+        }
+        else
+        {
+            res.status(404).json({error: 'Invalid action ID'});
+        }
+    })
+    .catch()
+}
+module.exports = {validateID, validateProject, validateActions, validateActionId};
