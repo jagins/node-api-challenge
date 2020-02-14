@@ -81,4 +81,23 @@ router.post('/:id/actions', validateID, validateActions, (req,res) =>
         res.status(500).json({error: 'error when trying to save the action'});
     })
 })
+
+router.put('/:id', validateID, (req, res) =>
+{
+    const updateProject = {
+        name: req.body.name ? req.body.name : req.project.name,
+        description: req.body.description ? req.body.description : req.project.description,
+        completed: req.body.completed ? req.body.completed : req.project.completed
+    };
+
+    projectDatabase.update(req.project.id, updateProject)
+    .then(updatedProject =>
+    {
+        res.status(200).json(updatedProject);
+    })
+    .catch(err =>
+    {
+        res.status(500).json({error: 'error updating project'});
+    })
+})
 module.exports = router;
