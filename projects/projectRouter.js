@@ -1,7 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const projectDatabase = require('../data/helpers/projectModel');
-const {validateID, validateProject} = require('../utils');
+const actionsDatabase = require('../data/helpers/actionModel');
+const {validateID, validateProject, validateActions} = require('../utils');
 
 // api/projects
 router.get('/', (req, res) =>
@@ -58,6 +59,26 @@ router.post('/', validateProject, (req, res) =>
     .catch(err =>
     {
         res.status(500).json({error: 'There was an error saving to the database'});
+    })
+})
+
+router.post('/:id/actions', validateID, validateActions, (req,res) =>
+{
+    const newAction = {
+        project_id: req.project.id,
+        description: req.body.description ? req.body.description : "",
+        notes: req.body.notes ? req.body.notes : "",
+        completed: req.body.completed ? req.body.completed : false
+    }
+
+    actionsDatabase.insert(newAction)
+    .then(actionCreated =>
+    {
+        res.status(201).json(actionCreated);
+    })
+    .catch(err =>
+    {
+        res.status(500).json({error: 'error when trying to save the action'});
     })
 })
 module.exports = router;

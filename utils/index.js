@@ -32,6 +32,7 @@ function validateProject(req, res, next)
   {
     res.status(400).json({error: 'missing required name field'});
   }
+
   if(!req.body.description)
   {
     res.status(400).json({error: 'missing required description field'});
@@ -42,4 +43,26 @@ function validateProject(req, res, next)
   }
 }
 
-module.exports = {validateID, validateProject};
+function validateActions(req, res, next)
+{
+    if(!req.body.project_id && !req.body.description)
+    {
+        res.status(400).json({error: 'missing project ID and action description'});
+    }
+
+    if(!req.body.project_id)
+    {
+        res.status(400).json({error: 'missing project ID'});
+    }
+
+    if(!req.body.description)
+    {
+        res.status(400).json({error: 'missing action description ID'});
+    }
+    else
+    {
+        next();
+    }
+}
+
+module.exports = {validateID, validateProject, validateActions};
